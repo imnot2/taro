@@ -6,7 +6,6 @@ const REG_TRACKBY_REPLACEMENT = /s-for="{{([A-Za-z]+)\.cn}}" s-key="sid"/
 const swanSpecialAttrs = {
   'scroll-view': ['scroll-top', 'scroll-left', 'scroll-into-view'],
   'movable-view': ['x', 'y'],
-  slider: ['value'],
   input: ['value'],
   textarea: ['value']
 }
@@ -89,7 +88,7 @@ export class Template extends RecursiveTemplate {
 
   buildFlattenView = (level = this.flattenViewLevel): string => {
     if (level === 0) {
-      return '<template is="{{xs.e(0)}}" data="{{{i:item}}}" />'
+      return `<template is="{{xs.a(0, item.${Shortcuts.NodeName})}}" data="{{{i:item}}}" />`
     }
 
     const child = this.buildFlattenView(level - 1)
@@ -120,17 +119,17 @@ export class Template extends RecursiveTemplate {
 </text>
 <button s-elif="{{item.nn==='${buttonAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('button')}>
   <block s-for="item.cn trackBy item.sid">
-    <template is="{{xs.e(0)}}" data="{{{ i:item }}}" />
+    <template is="{{xs.a(0, item.${Shortcuts.NodeName})}}" data="{{{ i:item }}}" />
   </block>
 </button>
 <input s-elif="{{item.nn==='${inputAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('input')} />
 <swiper s-elif="{{item.nn==='${swiperAlias}'&&(item.st||item.cl)}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}" ${this.buildFlattenNodeAttributes('swiper')}>
   <block s-for="xs.f(item.cn) trackBy item.sid">
-    <template is="{{xs.e(0)}}" data="{{{ i:item }}}" />
+    <template is="{{xs.a(0, item.${Shortcuts.NodeName})}}" data="{{{ i:item }}}" />
   </block>
 </swiper>
 <block s-else>
-  <template is="{{xs.e(0)}}" data="{{{i:item}}}" />
+  <template is="{{xs.a(0, item.${Shortcuts.NodeName})}}" data="{{{i:item}}}" />
 </block>`
 
     return template
@@ -138,7 +137,7 @@ export class Template extends RecursiveTemplate {
 
   buildFlattenCover = (level = this.flattenCoverLevel): string => {
     if (level === 0) {
-      return '<template is="{{xs.e(0)}}" data="{{{i:item}}}" />'
+      return `<template is="{{xs.a(0, item.${Shortcuts.NodeName})}}" data="{{{i:item}}}" />`
     }
 
     const child = this.buildFlattenCover(level - 1)
@@ -157,7 +156,7 @@ export class Template extends RecursiveTemplate {
 <cover-image s-elif="{{item.nn==='${coverImageAlias}'}}" id="{{item.uid||item.sid}}" data-sid="{{item.sid}}"  ${this.buildFlattenNodeAttributes('cover-image')}></cover-image>
 <block s-elif="{{item.nn==='${contentAlias}'}}">{{item.v}}</block>
 <block s-else>
-  <template is="{{xs.e(0)}}" data="{{{i:item}}}" />
+  <template is="{{xs.a(0, item.${Shortcuts.NodeName})}}" data="{{{i:item}}}" />
 </block>`
 
     return template
@@ -165,7 +164,7 @@ export class Template extends RecursiveTemplate {
 
   buildFlattenText = (level = this.flattenTextLevel): string => {
     if (level === 0) {
-      return `<block>{{i.${Shortcuts.Childnodes}[index].${Shortcuts.Text}}}</block>`
+      return `<block>{{item.${Shortcuts.Text}}}</block>`
     }
 
     const child = this.buildFlattenText(level - 1)

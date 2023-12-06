@@ -22,6 +22,7 @@ const legacyOptions = {
 }
 
 const deviceRatio = {
+  375: 2,
   640: 2.34 / 2,
   750: 1,
   828: 1.81 / 2
@@ -45,10 +46,24 @@ module.exports = (options = {}) => {
   const baseFontSize = options.baseFontSize || (options.minRootSize >= 1 ? options.minRootSize : 20)
   const designWidth = (input) =>
     typeof options.designWidth === 'function' ? options.designWidth(input) : options.designWidth
+
   switch (options.platform) {
     case 'h5': {
-      options.rootValue = (input) => (baseFontSize / options.deviceRatio[designWidth(input)]) * 2
-      targetUnit = 'rem'
+      targetUnit = options.targetUnit ?? 'rem'
+
+      if (targetUnit === 'vw') {
+        options.rootValue = (input) => {
+          return designWidth(input) / 100
+        }
+      } else if (targetUnit === 'px') {
+        options.rootValue = (input) => (1 / options.deviceRatio[designWidth(input)]) * 2
+      } else {
+        // rem
+        options.rootValue = (input) => {
+          return (baseFontSize / options.deviceRatio[designWidth(input)]) * 2
+        }
+      }
+
       transUnits.push('rpx')
       break
     }
@@ -69,8 +84,16 @@ module.exports = (options = {}) => {
     }
     default: {
       // mini-program
-      options.rootValue = (input) => 1 / options.deviceRatio[designWidth(input)]
-      targetUnit = 'rpx'
+      targetUnit = options.targetUnit ?? 'rpx'
+
+      if (targetUnit === 'rem') {
+        options.rootValue = (input) => (baseFontSize / options.deviceRatio[designWidth(input)]) * 2
+      } else if (targetUnit === 'px') {
+        options.rootValue = (input) => (1 / options.deviceRatio[designWidth(input)]) * 2
+      } else {
+        // rpx
+        options.rootValue = (input) => 1 / options.deviceRatio[designWidth(input)]
+      }
     }
   }
 
@@ -240,9 +263,12 @@ function createPxReplace (rootValue, unitPrecision, minPixelValue, onePxTransfor
       }
       const pixels = parseFloat($1)
       if (pixels < minPixelValue) return m
-      const fixedVal = toFixed(pixels / rootValue(input, m, $1), unitPrecision)
+      let val = pixels / rootValue(input, m, $1)
+      if (unitPrecision >= 0 && unitPrecision <= 100) {
+        val = toFixed(val, unitPrecision)
+      }
       // 不带单位不支持在calc表达式中参与计算(https://github.com/NervJS/taro/issues/12607)
-      return fixedVal + targetUnit
+      return val + targetUnit
     }
   }
 }

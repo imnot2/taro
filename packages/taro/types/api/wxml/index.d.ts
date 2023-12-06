@@ -304,7 +304,7 @@ declare module '../../index' {
   namespace NodesRef {
     /** 回调函数，在执行 `SelectorQuery.exec` 方法后，节点信息会在 `callback` 中返回。 */
     type BoundingClientRectCallback = (
-      result: BoundingClientRectCallbackResult,
+      result: BoundingClientRectCallbackResult | BoundingClientRectCallbackResult[],
     ) => void
     interface BoundingClientRectCallbackResult {
       /** 节点的下边界坐标 */
@@ -503,7 +503,7 @@ declare module '../../index' {
      * @supported weapp, h5, tt
      * @example
      * ```tsx
-     * const observer = Taro.createIntersectionObserver(this, { thresholds: [0], observeAll: true })
+     * const observer = Taro.createIntersectionObserver(this, { thresholds: [0], observeAll: true })
      * ```
      * @see https://developers.weixin.qq.com/miniprogram/dev/api/wxml/wx.createIntersectionObserver.html
      */
@@ -525,7 +525,7 @@ declare module '../../index' {
      * } else if (process.env.TARO_ENV === 'h5') {
      *    createMediaQueryObserver= Taro.createMediaQueryObserver
      * }
-     * const mediaQueryObserver = createMediaQueryObserver() 
+     * const mediaQueryObserver = createMediaQueryObserver()
      * ```
      * @see https://developers.weixin.qq.com/miniprogram/dev/framework/view/resizable.html#Media%20Query
      */

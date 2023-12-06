@@ -523,6 +523,93 @@ describe('platform 为 weapp', () => {
     const processed = postcss(px2rem(options)).process(rules).css
     expect(processed).toBe(expected)
   })
+
+  it('{platform: \'weapp\', designWidth: 375} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 40rpx;font-size: 80rpx;line-height: 1.2;}'
+    const options = {
+      platform: 'weapp',
+      designWidth: 375
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+})
+
+describe('platform 为 weapp, targetUnit 为 rem', () => {
+  it('{platform: \'weapp\', designWidth: 750, targetUnit: \'rem\'} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40Px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 0.5rem;font-size: 40Px;line-height: 1.2;}'
+    const options = {
+      platform: 'weapp',
+      designWidth: 750,
+      targetUnit: 'rem'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+
+  it('{platform: \'weapp\', designWidth: 640, targetUnit: \'rem\'} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 0.585rem;font-size: 1.17rem;line-height: 1.2;}'
+    const options = {
+      platform: 'weapp',
+      designWidth: 640,
+      targetUnit: 'rem'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+
+  it('{platform: \'weapp\', designWidth: 375, targetUnit: \'rem\'} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 1rem;font-size: 2rem;line-height: 1.2;}'
+    const options = {
+      platform: 'weapp',
+      designWidth: 375,
+      targetUnit: 'rem'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+})
+
+describe('platform 为 weapp, targetUnit 为 px', () => {
+  it('{platform: \'weapp\', designWidth: 750, targetUnit: \'px\'} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40Px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 10px;font-size: 40Px;line-height: 1.2;}'
+    const options = {
+      platform: 'weapp',
+      designWidth: 750,
+      targetUnit: 'px'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+
+  it('{platform: \'weapp\', designWidth: 640, targetUnit: \'px\'} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 11.7px;font-size: 23.4px;line-height: 1.2;}'
+    const options = {
+      platform: 'weapp',
+      designWidth: 640,
+      targetUnit: 'px'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+
+  it('{platform: \'weapp\', designWidth: 375, targetUnit: \'px\'} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 20px;font-size: 40px;line-height: 1.2;}'
+    const options = {
+      platform: 'weapp',
+      designWidth: 375,
+      targetUnit: 'px'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
 })
 
 describe('platform 为 h5', () => {
@@ -543,6 +630,55 @@ describe('platform 为 h5', () => {
     const options = {
       platform: 'h5',
       designWidth: 640
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+
+  it('{platform: \'h5\', designWidth: 375} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40Px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 1rem;font-size: 40Px;line-height: 1.2;}'
+    const options = {
+      platform: 'h5',
+      designWidth: 375
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+})
+
+describe('platform 为 h5, targetUnit 为 px', () => {
+  it('{platform: \'h5\', designWidth: 750, targetUnit: \'px\'} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 10px;font-size: 20px;line-height: 1.2;}'
+    const options = {
+      platform: 'h5',
+      designWidth: 750,
+      targetUnit: 'px'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+
+  it('{platform: \'h5\', designWidth: 640, targetUnit: \'px\'} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40Px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 11.7px;font-size: 40Px;line-height: 1.2;}'
+    const options = {
+      platform: 'h5',
+      designWidth: 640,
+      targetUnit: 'px'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe(expected)
+  })
+
+  it('{platform: \'h5\', designWidth: 375, targetUnit: \'px\'} ', () => {
+    const rules = 'h1 {margin: 0 0 20px;font-size: 40Px;line-height: 1.2;}'
+    const expected = 'h1 {margin: 0 0 20px;font-size: 40Px;line-height: 1.2;}'
+    const options = {
+      platform: 'h5',
+      designWidth: 375,
+      targetUnit: 'px'
     }
     const processed = postcss(px2rem(options)).process(rules).css
     expect(processed).toBe(expected)
@@ -631,6 +767,7 @@ describe('rpx 单位转换', () => {
     const processed = postcss(px2rem(options)).process(rules).css
     expect(processed).toBe('h1 {margin: 0 0 20rpx;font-size: 40Px;line-height: 1.2;} .test{}')
   })
+
   it('{platform: \'h5\', designWidth: 640} ', () => {
     const rules = 'h1 {margin: 0 0 20rpx;font-size: 40Px;line-height: 1.2;} .test{}'
     const options = {
@@ -639,6 +776,62 @@ describe('rpx 单位转换', () => {
     }
     const processed = postcss(px2rem(options)).process(rules).css
     expect(processed).toBe('h1 {margin: 0 0 0.585rem;font-size: 40Px;line-height: 1.2;} .test{}')
+  })
+
+  it('{platform: \'weapp\', designWidth: 375} ', () => {
+    const rules = 'h1 {margin: 0 0 20rpx;font-size: 40Px;line-height: 1.2;} .test{}'
+    const options = {
+      platform: 'weapp',
+      designWidth: 375
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe('h1 {margin: 0 0 20rpx;font-size: 40Px;line-height: 1.2;} .test{}')
+  })
+})
+
+describe('vw 单位转换', () => {
+  it('{platform: \'h5\', designWidth: 640} ', () => {
+    const rules = 'h1 {margin: 0 0 640px;font-size: 40Px;line-height: 1.2;} .test{}'
+    const options = {
+      platform: 'h5',
+      designWidth: 750,
+      targetUnit: 'vw'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe('h1 {margin: 0 0 85.33333vw;font-size: 40Px;line-height: 1.2;} .test{}')
+  })
+
+  it('{platform: \'h5\', designWidth: 750} ', () => {
+    const rules = 'h1 {margin: 0 0 375px;font-size: 40Px;line-height: 1.2;} .test{}'
+    const options = {
+      platform: 'h5',
+      designWidth: 750,
+      targetUnit: 'vw'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe('h1 {margin: 0 0 50vw;font-size: 40Px;line-height: 1.2;} .test{}')
+  })
+
+  it('{platform: \'h5\', designWidth: 640} ', () => {
+    const rules = 'h1 {margin: 0 0 320px;font-size: 40Px;line-height: 1.2;} .test{}'
+    const options = {
+      platform: 'h5',
+      designWidth: 640,
+      targetUnit: 'vw'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe('h1 {margin: 0 0 50vw;font-size: 40Px;line-height: 1.2;} .test{}')
+  })
+
+  it('{platform: \'h5\', designWidth: 375} ', () => {
+    const rules = 'h1 {margin: 0 0 320px;font-size: 40Px;line-height: 1.2;} .test{}'
+    const options = {
+      platform: 'h5',
+      designWidth: 375,
+      targetUnit: 'vw'
+    }
+    const processed = postcss(px2rem(options)).process(rules).css
+    expect(processed).toBe('h1 {margin: 0 0 85.33333vw;font-size: 40Px;line-height: 1.2;} .test{}')
   })
 })
 

@@ -12,7 +12,6 @@ export { MovableView } from './MovableView'
 export { PageContainer } from './PageContainer'
 export { RootPortal } from './RootPortal'
 export { ScrollView } from './ScrollView'
-export { ShareElement } from './ShareElement'
 export { Swiper } from './Swiper'
 export { SwiperItem } from './SwiperItem'
 export { View } from './View'
@@ -41,6 +40,14 @@ export { Slider } from './Slider'
 export { Switch } from './Switch'
 export { Textarea } from './Textarea'
 
+/** Skyline */
+export { GridView } from './GridView'
+export { ListView } from './ListView'
+export { ShareElement } from './ShareElement'
+export { Snapshot } from './SnapShot'
+export { StickyHeader } from './StickyHeader'
+export { StickySection } from './StickySection'
+
 /** 导航 */
 export { FunctionalPageNavigator } from './FunctionalPageNavigator'
 export { Navigator } from './Navigator'
@@ -58,6 +65,7 @@ export { LivePlayer } from './LivePlayer'
 export { LivePusher } from './LivePusher'
 export { Video } from './Video'
 export { VoipRoom } from './VoipRoom'
+export { Lottie } from './Lottie'
 
 /** 地图 */
 export { Map } from './Map'

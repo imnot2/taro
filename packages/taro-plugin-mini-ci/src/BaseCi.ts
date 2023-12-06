@@ -1,7 +1,9 @@
-import { IPluginContext } from '@tarojs/service'
 import * as path from 'path'
+import * as process from 'process'
 
 import { ON_PREVIEW_COMPLETE, ON_UPLOAD_COMPLETE } from './hooks'
+
+import type { IPluginContext } from '@tarojs/service'
 
 export type ProjectType = 'miniProgram' | 'miniGame' | 'miniProgramPlugin' | 'miniGamePlugin';
 
@@ -79,6 +81,8 @@ export interface AlipayConfig {
   devToolsInstallPath?: string
   /** 上传的终端, 默认alipay */
   clientType?: AlipayClientType
+  /** 上传时想要删除的一个版本 */
+  deleteVersion?: string
 }
 
 export type DingtalkProjectType =
@@ -114,7 +118,12 @@ export interface SwanConfig {
 }
 
 export interface JdConfig {
+  /** 秘钥信息 */
   privateKey: string
+  /** 指定使用哪一个 ci 机器人，可选值：1 ~ 30 */
+  robot?: number
+  /** 指定需要排除的规则。无需配置以“.”开头的隐藏文件，它们将默认被忽略，如“.git” */
+  ignores?: string[]
 }
 
 export interface CIOptions {
@@ -165,7 +174,7 @@ export default abstract class BaseCI {
         encoding: 'utf8'
       })
     )
-    this.version = pluginOpts.version || packageInfo.taroConfig?.version || '1.0.0'
+    this.version = pluginOpts.version || packageInfo.taroConfig?.version
     this.desc = pluginOpts.desc || packageInfo.taroConfig?.desc || `CI构建自动构建于${new Date().toLocaleTimeString()}`
 
   }
@@ -194,6 +203,10 @@ export default abstract class BaseCI {
         error
       },
     })
+
+    if(!success) {
+      process.exit(1)
+    }
   }
 
   /** 执行上传命令后触发 */
@@ -216,6 +229,10 @@ export default abstract class BaseCI {
         error
       },
     })
+
+    if(!success) {
+      process.exit(1)
+    }
   }
 
   /** 初始化函数，new实例化后会被立即调用一次 */
